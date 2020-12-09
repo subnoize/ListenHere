@@ -1,2 +1,2 @@
 # ListenHere
-Spring friendly messaging system integration
+Spring friendly messaging system integration framework.
