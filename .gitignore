@@ -3,6 +3,10 @@
 *.war
 *.ear
 *.class
+*.classpath
+*.factorypath
+*.project
+*.settings
 
 # Log Files #
 *.log
