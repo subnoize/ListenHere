@@ -1,4 +1,4 @@
-package net.subnoize.listenhere4sqs;
+package net.subnoize.listenhere.sqs;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -15,14 +15,14 @@ import org.springframework.context.event.ContextClosedEvent;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.subnoize.listenhere.listen.ListenProvider;
+import net.subnoize.listenhere.Provider;
 import net.subnoize.listenhere.listen.ListenTo;
 import net.subnoize.listenhere.util.ConfigurationUtils;
 
 @Slf4j
 @Configuration(ListenHere4Sqs.PROVIDER)
 @NoArgsConstructor
-public class ListenHere4Sqs implements ListenProvider, ApplicationListener<ContextClosedEvent> {
+public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
 
 	public static final String PROVIDER = "ListenHere4Sqs";
 

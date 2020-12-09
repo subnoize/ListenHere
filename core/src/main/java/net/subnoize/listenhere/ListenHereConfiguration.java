@@ -1,4 +1,4 @@
-package net.subnoize.listenhere.listen;
+package net.subnoize.listenhere;
 
 import java.util.Arrays;
 import java.util.List;
@@ -9,9 +9,11 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
+import net.subnoize.listenhere.listen.Listen;
 
 /**
  * 
@@ -20,7 +22,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Configuration
-public class ListenProcessor {
+@ComponentScan(basePackages = {"net.subnoize.listenhere"})
+public class ListenHereConfiguration {
 
 	@Autowired
 	private ApplicationContext context;
@@ -38,7 +41,7 @@ public class ListenProcessor {
 			}
 			Listen listen = klass.getAnnotation(Listen.class);
 			if(StringUtils.isNotBlank(listen.value())) {
-				context.getBean(listen.value(),ListenProvider.class).registerListener(klass);
+				context.getBean(listen.value(),Provider.class).registerListener(klass);
 			} else {
 				log.error("@Listen used with blank service reference: {}",klass.getName());
 			}

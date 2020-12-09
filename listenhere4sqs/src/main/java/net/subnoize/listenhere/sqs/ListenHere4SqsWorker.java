@@ -1,4 +1,4 @@
-package net.subnoize.listenhere4sqs;
+package net.subnoize.listenhere.sqs;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;

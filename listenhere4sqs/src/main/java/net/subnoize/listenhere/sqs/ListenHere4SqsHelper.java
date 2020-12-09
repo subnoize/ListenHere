@@ -1,4 +1,4 @@
-package net.subnoize.listenhere4sqs;
+package net.subnoize.listenhere.sqs;
 
 import java.util.HashMap;
 import java.util.Map;

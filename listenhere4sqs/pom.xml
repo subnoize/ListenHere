@@ -6,14 +6,14 @@
 
 	<!--The identifier of the parent POM -->
 	<parent>
-		<groupId>com.subnoize</groupId>
+		<groupId>net.subnoize</groupId>
 		<artifactId>listenhere</artifactId>
 		<version>${revision}</version>
 	</parent>
 
-	<artifactId>listenhere4aws</artifactId>
+	<artifactId>listenhere4sqs</artifactId>
 	<packaging>jar</packaging>
-	<name>ListenHere4AWS</name>
+	<name>ListenHere4SQS</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -21,15 +21,13 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.subnoize</groupId>
-			<artifactId>core</artifactId>
+			<groupId>net.subnoize</groupId>
+			<artifactId>listenhere-core</artifactId>
 			<version>${revision}</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.projectlombok</groupId>
@@ -40,20 +38,17 @@
 		<dependency>
 			<groupId>software.amazon.awssdk</groupId>
 			<artifactId>sqs</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-lang3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-lang3</artifactId>
-			<scope>provided</scope>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.commons/commons-math3 -->
 		<dependency>
 			<groupId>org.apache.commons</groupId>
 			<artifactId>commons-math3</artifactId>
 			<version>3.6.1</version>
-			<scope>provided</scope>
 		</dependency>
 	</dependencies>
 </project>

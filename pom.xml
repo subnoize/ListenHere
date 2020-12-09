@@ -9,7 +9,7 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.subnoize</groupId>
+	<groupId>net.subnoize</groupId>
 	<artifactId>listenhere</artifactId>
 	<version>${revision}</version>
 	<packaging>pom</packaging>
