@@ -22,24 +22,43 @@ import java.util.Map;
 import lombok.Builder;
 import lombok.Data;
 
-
+/**
+ * Session objects are to maintain the thread safety during operation while
+ * processing events to which you are listening. They are built for you by the
+ * Provider and control the various aspects of the event.
+ * <p>
+ * When a SendTo annotation is present it can specify a default destination but
+ * by requesting the Session object in your method signature you can then change
+ * the destination by setting the Session destination.
+ * 
+ * @author John Bryant
+ *
+ */
 @Data
 @Builder
 public class Session {
 
 	private boolean acknowledge;
-	
+
 	private boolean error;
-	
+
 	private int errorCode;
-	
+
 	private String errorDescription;
-	
+
+	/**
+	 * The raw inbound message is present here. If the message is delivered by JMS
+	 * the this might be a TextMessage or the like
+	 */
 	private Object rawInboundMessage;
-	
-	private String replyToQueueUrl;
-	
+
+	/**
+	 * The override when the SendTo is present. This means that if the process
+	 * requires redirection you can change that destination here in the Session
+	 */
+	private String destination;
+
 	@Builder.Default
 	private Map<String, Object> attributes = new HashMap<>();
-	
+
 }

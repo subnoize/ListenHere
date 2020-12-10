@@ -244,7 +244,7 @@ class ListenHere4SqsWorker implements Runnable, RejectedExecutionHandler {
 					} else {
 						body = mapper.writeValueAsString(ret);
 					}
-					asyncClient.sendMessage(SendMessageRequest.builder().queueUrl(session.getReplyToQueueUrl())
+					asyncClient.sendMessage(SendMessageRequest.builder().queueUrl(session.getDestination())
 							.messageBody(body).messageAttributes(getAttributes(session)).build()).get();
 				}
 			}

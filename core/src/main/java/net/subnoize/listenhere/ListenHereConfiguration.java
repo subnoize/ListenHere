@@ -32,8 +32,11 @@ import lombok.extern.slf4j.Slf4j;
 import net.subnoize.listenhere.listen.Listen;
 
 /**
+ * The configuration class for ListenHere is the processor for the annotations
+ * which brings the elements together into a runnable state. The user will see
+ * this as Spring magic.
  * 
- * @author youca
+ * @author John Bryant
  *
  */
 @Slf4j
@@ -44,6 +47,12 @@ public class ListenHereConfiguration {
 	@Autowired
 	private ApplicationContext context;
 
+	/**
+	 * The process by which the various annotated elements are brought together into
+	 * a runnable state.
+	 * 
+	 * @throws ClassNotFoundException
+	 */
 	@PostConstruct
 	public void init() throws ClassNotFoundException {
 		Map<String, Object> beans = context.getBeansWithAnnotation(Listen.class);

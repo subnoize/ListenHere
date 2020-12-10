@@ -22,6 +22,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * Hints at the actual payload object when more than one value is in a listener method signature.
+ * 
+ * @author John Bryant
+ *
+ */
 @Retention(RUNTIME)
 @Target(PARAMETER)
 public @interface Payload {

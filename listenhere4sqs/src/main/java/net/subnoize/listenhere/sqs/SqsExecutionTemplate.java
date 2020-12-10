@@ -109,7 +109,7 @@ public class SqsExecutionTemplate {
 
 	public Session newSession() {
 		return Session.builder().acknowledge(to.acknowledge()).error(false).errorCode(-1).errorDescription(null)
-				.replyToQueueUrl(sendTo).build();
+				.destination(sendTo).build();
 	}
 
 	public Object invoke(Object[] args) throws IllegalAccessException, InvocationTargetException {

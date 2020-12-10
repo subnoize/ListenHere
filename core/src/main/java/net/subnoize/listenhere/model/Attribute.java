@@ -22,8 +22,19 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * The annotation used to hint the value should be pulled from the attributes of the queue
+ * 
+ * @author John Bryant
+ *
+ */
 @Retention(RUNTIME)
 @Target(PARAMETER)
 public @interface Attribute {
+	
+	/**
+	 * The name of the attribute you wish to access
+	 * @return
+	 */
 	String value() default "";
 }
