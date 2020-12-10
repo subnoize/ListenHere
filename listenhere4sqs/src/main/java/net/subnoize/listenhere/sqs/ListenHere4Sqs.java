@@ -1,3 +1,19 @@
+/**
+ * (c)opyright 2020 subnoize llc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.subnoize.listenhere.sqs;
 
 import java.lang.reflect.Method;
@@ -33,7 +49,7 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 	private ConfigurationUtils helper;
 
 	private Map<String, ListenHere4SqsWorker> workers = new HashMap<>();
-	
+
 	public void shutdown() {
 		workers.entrySet().forEach(e -> e.getValue().shutdown());
 	}
@@ -48,7 +64,7 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 					if (queueString.contains("${")) {
 						queueString = helper.getString(queueString);
 					}
-					workers.put(queueString, getMesssageWorker(lt, queueString, method, context.getBean(klass)));
+					workers.put(queueString, getMesssageWorker(getExecutionTemplate(lt, queueString, method, context.getBean(klass))));
 					log.info("ListenTo: {}.{}('{}',{},{},{},{})", klass.getName(), method.getName(), queueString,
 							lt.min(), lt.max(), lt.timeout(), lt.polling());
 				} catch (Exception e) {
@@ -65,8 +81,19 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 
 	@Bean(name = "ListenHere4SqsWorker")
 	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
-	public ListenHere4SqsWorker getMesssageWorker(ListenTo to, String queueUrl, Method method, Object target)
+	public ListenHere4SqsWorker getMesssageWorker(SqsExecutionTemplate template) {
+		return new ListenHere4SqsWorker(template);
+	}
+
+	@Bean(name = "SqsExecutionTemplate")
+	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
+	public SqsExecutionTemplate getExecutionTemplate(ListenTo to, String queueUrl, Method method, Object target)
 			throws NoSuchMethodException {
-		return new ListenHere4SqsWorker(to, queueUrl, method, target);
+		SqsExecutionTemplate temp = new SqsExecutionTemplate();
+		temp.setQueueUrl(queueUrl);
+		temp.setMethod(method);
+		temp.setTarget(target);
+		temp.setTo(to);
+		return temp;
 	}
 }
