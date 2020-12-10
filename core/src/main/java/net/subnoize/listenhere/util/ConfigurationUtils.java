@@ -24,6 +24,12 @@ import org.springframework.stereotype.Component;
 
 import lombok.NoArgsConstructor;
 
+/**
+ * A helper to unwrap and retrieve values from the Spring Configuration system.
+ * 
+ * @author John Bryant
+ *
+ */
 @NoArgsConstructor
 @Component
 public class ConfigurationUtils {
@@ -35,6 +41,13 @@ public class ConfigurationUtils {
 	@Autowired
 	private Environment env;
 
+	/**
+	 * Get a string from the Spring configuration sub-system, unwrapping the "${..}"
+	 * in the process
+	 * 
+	 * @param key
+	 * @return
+	 */
 	public String getString(String key) {
 		return env.getProperty(pattern.matcher(key).replaceAll(EMPTY_STRING).trim());
 	}

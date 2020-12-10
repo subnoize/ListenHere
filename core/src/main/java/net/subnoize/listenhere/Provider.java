@@ -17,12 +17,19 @@
 package net.subnoize.listenhere;
 
 /**
+ * If you wish to write a custom Provider (the means by which ListenTo and
+ * ListenFor are wired into the particular system) then you need to implement
+ * this interface.
+ * <p>
+ * To use your custom provider you would the specify it by Spring Bean name as
+ * the Listen value.
  * 
- * @author youca
- *
+ * @author John Bryant
+ * @version 1.0
+ * 
  */
 public interface Provider {
-	
+
 	void registerListener(Class<?> klass);
-	
+
 }

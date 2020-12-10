@@ -22,6 +22,12 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * Reserved for Subscriptions to Topics and Streams
+ * 
+ * @author John Bryant
+ *
+ */
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface ListenFor {

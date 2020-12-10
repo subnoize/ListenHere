@@ -22,14 +22,70 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * Used to annotate a listener method.
+ * 
+ * @author John Bryant
+ *
+ */
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface ListenTo {
+
+	/**
+	 * The Queue name to listen too.
+	 * 
+	 * @return the queue name
+	 */
 	String value();
+
+	/**
+	 * Minimum threads used for listening to this queue. Default is 1.
+	 * 
+	 * @return the minimum active threads
+	 */
 	int min() default 1;
+
+	/**
+	 * Maximum threads used for listening to this queue. Default is 1 and is
+	 * probably NOT production ready.
+	 * 
+	 * @return the maximum thread count
+	 */
 	int max() default 1;
+
+	/**
+	 * The timeout value for the listener
+	 * 
+	 * @return the timeout value in milliseconds
+	 */
 	long timeout() default 0;
+
+	/**
+	 * The polling is the manager thread wake period. This can bet turned to reduce
+	 * CPU or increase recycling of worker threads. Be careful as a lower number
+	 * doesn't mean faster recycling as the runtime for the threads will almost
+	 * always be longer that teh poll time.
+	 * 
+	 * @return the long value for the polling interval in milliseconds
+	 */
 	long polling() default 10;
+
+	/**
+	 * This parameter governs the ability to auto-acknowledge messages by defaulting
+	 * to true. Set this to false to handle and then in the listener methods you can
+	 * manually acknowledge by changing the value in the Session object.
+	 * 
+	 * @return the boolean value of the auto-acknowledge function 
+	 */
 	boolean acknowledge() default true;
+
+	/**
+	 * Providing a name for the field you want to place your custom Transaction ID
+	 * is means that ListenHere can pass this value through for you and make it
+	 * available via the Session object.
+	 * 
+	 * @return the name of the attribute that contains the transaction ID
+	 */
 	String transactionId() default "";
 }

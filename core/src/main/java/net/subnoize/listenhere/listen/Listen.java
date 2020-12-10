@@ -22,6 +22,13 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
+/**
+ * This annotation marks Spring Beans as containing listener methods as well as
+ * specifying the Provider to be used.
+ * 
+ * @author John Bryant
+ *
+ */
 @Retention(RUNTIME)
 @Target(TYPE)
 public @interface Listen {
