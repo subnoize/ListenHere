@@ -1,3 +1,19 @@
+/**
+ * (c)opyright 2020 subnoize llc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package net.subnoize.listenhere;
 
 import java.util.Arrays;
@@ -22,7 +38,7 @@ import net.subnoize.listenhere.listen.Listen;
  */
 @Slf4j
 @Configuration
-@ComponentScan(basePackages = {"net.subnoize.listenhere"})
+@ComponentScan(basePackages = { "net.subnoize.listenhere" })
 public class ListenHereConfiguration {
 
 	@Autowired
@@ -40,10 +56,10 @@ public class ListenHereConfiguration {
 				klass = klass.getSuperclass();
 			}
 			Listen listen = klass.getAnnotation(Listen.class);
-			if(StringUtils.isNotBlank(listen.value())) {
-				context.getBean(listen.value(),Provider.class).registerListener(klass);
+			if (StringUtils.isNotBlank(listen.value())) {
+				context.getBean(listen.value(), Provider.class).registerListener(klass);
 			} else {
-				log.error("@Listen used with blank service reference: {}",klass.getName());
+				log.error("@Listen used with blank service reference: {}", klass.getName());
 			}
 		}
 	}
