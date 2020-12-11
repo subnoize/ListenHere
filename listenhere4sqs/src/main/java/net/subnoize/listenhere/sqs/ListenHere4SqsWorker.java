@@ -37,6 +37,7 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -249,6 +250,7 @@ class ListenHere4SqsWorker implements Runnable, RejectedExecutionHandler {
 				}
 			}
 		}
+		MDC.clear();
 	}
 
 	private Map<String, MessageAttributeValue> getAttributes(Session session) {
@@ -303,6 +305,7 @@ class ListenHere4SqsWorker implements Runnable, RejectedExecutionHandler {
 		if (StringUtils.isNotBlank(template.getTo().transactionId())) {
 			MessageAttributeValue v = m.messageAttributes().get(template.getTo().transactionId());
 			if (v != null) {
+				MDC.put(template.getTo().transactionId(), v.stringValue());
 				switch (v.dataType()) {
 				case "String":
 					session.getAttributes().put(template.getTo().transactionId(), v.stringValue());
@@ -335,7 +338,6 @@ class ListenHere4SqsWorker implements Runnable, RejectedExecutionHandler {
 	@Override
 	public void rejectedExecution(Runnable r, ThreadPoolExecutor executor) {
 		log.error("{} : has been rejected", r.toString());
-
 	}
 
 }
