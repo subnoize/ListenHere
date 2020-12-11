@@ -5,10 +5,15 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.subnoize</groupId>
 	<artifactId>listenhere</artifactId>
-	<version>${revision}</version>
+	<version>0.0.2-RELEASE</version>
 	<packaging>pom</packaging>
 	<name>ListenHere</name>
 	<description>A system by which to learn basics of microservices and cloud based services</description>
+
+	<properties>
+		<maven.compiler.source>11</maven.compiler.source>
+		<maven.compiler.target>11</maven.compiler.target>
+	</properties>
 
 	<developers>
 		<developer>
@@ -52,12 +57,6 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<properties>
-		<maven.compiler.source>11</maven.compiler.source>
-		<maven.compiler.target>11</maven.compiler.target>
-		<revision>0.0.1-SNAPSHOT</revision>
-	</properties>
-
 	<modules>
 		<module>core</module>
 		<module>listenhere4sqs</module>
@@ -82,7 +81,7 @@
 		</snapshotRepository>
 		<repository>
 			<id>ossrh</id>
-			<url>https://oss.snonatype.org/service/local/stagging/deploy/maven2</url>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2</url>
 		</repository>
 	</distributionManagement>
 
