@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.subnoize</groupId>
 	<artifactId>listenhere</artifactId>
-	<version>0.1</version>
+	<version>0.0.3-SNAPSHOT</version>
 	<packaging>pom</packaging>
 	<name>ListenHere</name>
 	<description>A system by which to learn basics of microservices and cloud based services</description>
