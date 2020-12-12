@@ -4,6 +4,7 @@
 	<artifactId>listenhere-core</artifactId>
 	<packaging>jar</packaging>
 	<name>Core</name>
+	<description>The core library of components and runtime configuration</description>
 
 	<!--The identifier of the parent POM -->
 	<parent>

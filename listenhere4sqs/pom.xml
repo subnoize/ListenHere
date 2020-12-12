@@ -4,6 +4,7 @@
 	<artifactId>listenhere4sqs</artifactId>
 	<packaging>jar</packaging>
 	<name>ListenHere4SQS</name>
+	<description>Spring Boot Starter for AWS Java 2.x SQS messaging</description>
 
 	<!--The identifier of the parent POM -->
 	<parent>
