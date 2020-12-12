@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.subnoize</groupId>
 	<artifactId>listenhere</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.3-RELEASE</version>
 	<packaging>pom</packaging>
 	<name>ListenHere</name>
 	<description>Vendor specific messaging abstraction layer that is Spring Boot friendly and easy to use.</description>

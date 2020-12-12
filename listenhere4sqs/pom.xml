@@ -10,7 +10,7 @@
 	<parent>
 		<groupId>net.subnoize</groupId>
 		<artifactId>listenhere</artifactId>
-		<version>0.0.3-SNAPSHOT</version>
+		<version>0.0.3-RELEASE</version>
 	</parent>
 
 	<properties>
@@ -24,7 +24,7 @@
 		<dependency>
 			<groupId>net.subnoize</groupId>
 			<artifactId>listenhere-core</artifactId>
-			<version>0.0.3-SNAPSHOT</version>
+			<version>0.0.3-RELEASE</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
