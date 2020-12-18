@@ -35,6 +35,24 @@ import net.subnoize.listenhere.Provider;
 import net.subnoize.listenhere.listen.ListenTo;
 import net.subnoize.listenhere.util.ConfigurationUtils;
 
+/**
+ * Usage:
+ * 
+ * Create a SqsAsyncClient bean and annotate your listeners appropriately to begin.
+ * 
+ * <pre><code>
+ * &#64;Configuration
+ * public class SqsConfiguration {	
+ *   &#64;Bean
+ *   public SqsAsyncClient getSqsAsyncClient() {
+ *     return SqsAsyncClient.create();
+ *   }
+ * }
+ * </code></pre>
+ * 
+ * @author John Bryant
+ *
+ */
 @Slf4j
 @Configuration(ListenHere4Sqs.PROVIDER)
 @NoArgsConstructor

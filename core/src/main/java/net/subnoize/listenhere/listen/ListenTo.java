@@ -24,6 +24,18 @@ import java.lang.annotation.Target;
 
 /**
  * Used to annotate a listener method.
+
+ * <pre><code>
+ * &#64;Component
+ * public class MyListeners {	
+ *   &#64;ListenTo(value = "${examples.say.hello.queue}")
+ *   &#64;SendTo("${examples.say.hello.result.queue}")
+ *   public String sayHello(String msg) {
+ *     return "Hello, "+msg;
+ *   }
+ * }
+ * </code></pre>
+ * 
  * 
  * @author John Bryant
  *
