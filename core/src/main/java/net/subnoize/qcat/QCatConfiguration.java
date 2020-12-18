@@ -42,7 +42,7 @@ import net.subnoize.qcat.listen.Listen;
 @Slf4j
 @Configuration
 @ComponentScan(basePackages = { "net.subnoize.qcat" })
-public class ListenHereConfiguration {
+public class QCatConfiguration {
 
 	@Autowired
 	private ApplicationContext context;

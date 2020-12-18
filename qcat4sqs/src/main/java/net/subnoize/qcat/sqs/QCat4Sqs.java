@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.sqs;
+package net.subnoize.qcat.sqs;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -31,9 +31,9 @@ import org.springframework.context.event.ContextClosedEvent;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.subnoize.listenhere.Provider;
-import net.subnoize.listenhere.listen.ListenTo;
-import net.subnoize.listenhere.util.ConfigurationUtils;
+import net.subnoize.qcat.Provider;
+import net.subnoize.qcat.listen.ListenTo;
+import net.subnoize.qcat.util.ConfigurationUtils;
 
 /**
  * Usage:
@@ -54,11 +54,11 @@ import net.subnoize.listenhere.util.ConfigurationUtils;
  *
  */
 @Slf4j
-@Configuration(ListenHere4Sqs.PROVIDER)
+@Configuration(QCat4Sqs.PROVIDER)
 @NoArgsConstructor
-public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
+public class QCat4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
 
-	public static final String PROVIDER = "ListenHere4Sqs";
+	public static final String PROVIDER = "QCat4Sqs";
 
 	@Autowired
 	private ApplicationContext context;
@@ -66,7 +66,7 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 	@Autowired
 	private ConfigurationUtils helper;
 
-	private Map<String, ListenHere4SqsWorker> workers = new HashMap<>();
+	private Map<String, Qcat4SqsWorker> workers = new HashMap<>();
 
 	public void shutdown() {
 		workers.entrySet().forEach(e -> e.getValue().shutdown());
@@ -97,10 +97,10 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 		shutdown();
 	}
 
-	@Bean(name = "ListenHere4SqsWorker")
+	@Bean(name = "Qcat4SqsWorker")
 	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
-	public ListenHere4SqsWorker getMesssageWorker(SqsExecutionTemplate template) {
-		return new ListenHere4SqsWorker(template);
+	public Qcat4SqsWorker getMesssageWorker(SqsExecutionTemplate template) {
+		return new Qcat4SqsWorker(template);
 	}
 
 	@Bean(name = "SqsExecutionTemplate")

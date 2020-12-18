@@ -60,7 +60,7 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
  *
  */
 @Slf4j
-class ListenHere4SqsWorker implements Runnable, RejectedExecutionHandler {
+class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 
 	@Autowired
 	private SqsAsyncClient asyncClient;
@@ -84,7 +84,7 @@ class ListenHere4SqsWorker implements Runnable, RejectedExecutionHandler {
 
 	private SqsExecutionTemplate template;
 
-	ListenHere4SqsWorker(SqsExecutionTemplate template) {
+	Qcat4SqsWorker(SqsExecutionTemplate template) {
 		this.template = template;
 		stats.setWindowSize(100);
 	}

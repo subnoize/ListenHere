@@ -13,4 +13,4 @@
 # limitations under the License.
 # 
 # Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=net.subnoize.listenhere.sqs.ListenHere4Sqs
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=net.subnoize.qcat.sqs.QCat4Sqs
