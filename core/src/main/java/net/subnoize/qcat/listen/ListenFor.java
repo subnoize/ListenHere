@@ -14,27 +14,22 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.model;
+package net.subnoize.qcat.listen;
 
-import static java.lang.annotation.ElementType.PARAMETER;
+import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * The annotation used to hint the value should be pulled from the attributes of the queue
+ * Reserved for Subscriptions to Topics and Streams
  * 
  * @author John Bryant
  *
  */
 @Retention(RUNTIME)
-@Target(PARAMETER)
-public @interface Attribute {
-	
-	/**
-	 * The name of the attribute you wish to access
-	 * @return
-	 */
-	String value() default "";
+@Target(METHOD)
+public @interface ListenFor {
+	String value();
 }

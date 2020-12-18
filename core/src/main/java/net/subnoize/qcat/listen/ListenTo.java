@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.listen;
+package net.subnoize.qcat.listen;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;

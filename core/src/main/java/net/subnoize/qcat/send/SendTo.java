@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.listen;
+package net.subnoize.qcat.send;
 
 import static java.lang.annotation.ElementType.METHOD;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -23,13 +23,17 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Reserved for Subscriptions to Topics and Streams
- * 
+ * Marks a lister method as having the ability to send the return value as a object to send to the next queue as define in the value
  * @author John Bryant
  *
  */
 @Retention(RUNTIME)
 @Target(METHOD)
-public @interface ListenFor {
-	String value();
+public @interface SendTo {
+	
+	/**
+	 * The queue to send the return value too. Can be overridden by the Session object./
+	 * @return
+	 */
+	String value() default "";
 }

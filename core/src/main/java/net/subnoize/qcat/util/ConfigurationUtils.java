@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.util;
+package net.subnoize.qcat.util;
 
 import java.util.regex.Pattern;
 

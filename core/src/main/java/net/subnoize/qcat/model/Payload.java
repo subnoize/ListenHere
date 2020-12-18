@@ -14,23 +14,22 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.listen;
+package net.subnoize.qcat.model;
 
-import static java.lang.annotation.ElementType.TYPE;
+import static java.lang.annotation.ElementType.PARAMETER;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * This annotation marks Spring Beans as containing listener methods as well as
- * specifying the Provider to be used.
+ * Hints at the actual payload object when more than one value is in a listener method signature.
  * 
  * @author John Bryant
  *
  */
 @Retention(RUNTIME)
-@Target(TYPE)
-public @interface Listen {
-	String value() default "";
+@Target(PARAMETER)
+public @interface Payload {
+
 }

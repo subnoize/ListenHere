@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.sqs;
+package net.subnoize.qcat.sqs;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Parameter;
@@ -44,9 +44,9 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.slf4j.Slf4j;
-import net.subnoize.listenhere.Session;
-import net.subnoize.listenhere.model.Attribute;
-import net.subnoize.listenhere.util.ConfigurationUtils;
+import net.subnoize.qcat.Session;
+import net.subnoize.qcat.model.Attribute;
+import net.subnoize.qcat.util.ConfigurationUtils;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.model.DeleteMessageResponse;
 import software.amazon.awssdk.services.sqs.model.Message;

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.sqs;
+package net.subnoize.qcat.sqs;
 
 import java.util.HashMap;
 import java.util.Map;

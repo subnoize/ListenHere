@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere;
+package net.subnoize.qcat;
 
 import java.util.Arrays;
 import java.util.List;
@@ -29,7 +29,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 import lombok.extern.slf4j.Slf4j;
-import net.subnoize.listenhere.listen.Listen;
+import net.subnoize.qcat.listen.Listen;
 
 /**
  * The configuration class for ListenHere is the processor for the annotations
@@ -41,7 +41,7 @@ import net.subnoize.listenhere.listen.Listen;
  */
 @Slf4j
 @Configuration
-@ComponentScan(basePackages = { "net.subnoize.listenhere" })
+@ComponentScan(basePackages = { "net.subnoize.qcat" })
 public class ListenHereConfiguration {
 
 	@Autowired

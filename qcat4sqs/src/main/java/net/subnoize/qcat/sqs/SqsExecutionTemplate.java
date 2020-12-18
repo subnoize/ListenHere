@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.sqs;
+package net.subnoize.qcat.sqs;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -31,12 +31,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import net.subnoize.listenhere.Session;
-import net.subnoize.listenhere.listen.ListenTo;
-import net.subnoize.listenhere.model.Attribute;
-import net.subnoize.listenhere.model.Payload;
-import net.subnoize.listenhere.send.SendTo;
-import net.subnoize.listenhere.util.ConfigurationUtils;
+import net.subnoize.qcat.Session;
+import net.subnoize.qcat.listen.ListenTo;
+import net.subnoize.qcat.model.Attribute;
+import net.subnoize.qcat.model.Payload;
+import net.subnoize.qcat.send.SendTo;
+import net.subnoize.qcat.util.ConfigurationUtils;
 
 @NoArgsConstructor
 @Getter

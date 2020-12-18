@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere;
+package net.subnoize.qcat;
 
 /**
  * If you wish to write a custom Provider (the means by which ListenTo and

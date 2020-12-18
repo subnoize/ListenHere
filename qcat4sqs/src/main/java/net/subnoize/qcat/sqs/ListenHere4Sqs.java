@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.listenhere.sqs;
+package net.subnoize.qcat.sqs;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -31,9 +31,9 @@ import org.springframework.context.event.ContextClosedEvent;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.subnoize.listenhere.Provider;
-import net.subnoize.listenhere.listen.ListenTo;
-import net.subnoize.listenhere.util.ConfigurationUtils;
+import net.subnoize.qcat.Provider;
+import net.subnoize.qcat.listen.ListenTo;
+import net.subnoize.qcat.util.ConfigurationUtils;
 
 @Slf4j
 @Configuration(ListenHere4Sqs.PROVIDER)
