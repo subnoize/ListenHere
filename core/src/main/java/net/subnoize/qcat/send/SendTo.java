@@ -23,16 +23,34 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 /**
- * Marks a lister method as having the ability to send the return value as a object to send to the next queue as define in the value
+ * Marks a lister method as having the ability to send the return value as a
+ * object as a message to the next queue;
+ * 
+ * <pre>
+ * <code>
+ * &#64;Component
+ * public class MyListeners {	
+ *   &#64;ListenTo(value = "${examples.say.hello.queue}")
+ *   &#64;SendTo("${examples.say.hello.result.queue}")
+ *   public String sayHello(String msg) {
+ *     return "Hello, "+msg;
+ *   }
+ * }
+ * </code>
+ * </pre>
+ * 
+ * 
  * @author John Bryant
  *
  */
 @Retention(RUNTIME)
 @Target(METHOD)
 public @interface SendTo {
-	
+
 	/**
-	 * The queue to send the return value too. Can be overridden by the Session object./
+	 * The queue to send the return value too. Can be overridden by the Session
+	 * object./
+	 * 
 	 * @return
 	 */
 	String value() default "";

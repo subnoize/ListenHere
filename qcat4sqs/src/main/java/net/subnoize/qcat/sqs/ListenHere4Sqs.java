@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.qcat.sqs;
+package net.subnoize.listenhere.sqs;
 
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -31,10 +31,28 @@ import org.springframework.context.event.ContextClosedEvent;
 
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.subnoize.qcat.Provider;
-import net.subnoize.qcat.listen.ListenTo;
-import net.subnoize.qcat.util.ConfigurationUtils;
+import net.subnoize.listenhere.Provider;
+import net.subnoize.listenhere.listen.ListenTo;
+import net.subnoize.listenhere.util.ConfigurationUtils;
 
+/**
+ * Usage:
+ * 
+ * Create a SqsAsyncClient bean and annotate your listeners appropriately to begin.
+ * 
+ * <pre><code>
+ * &#64;Configuration
+ * public class SqsConfiguration {	
+ *   &#64;Bean
+ *   public SqsAsyncClient getSqsAsyncClient() {
+ *     return SqsAsyncClient.create();
+ *   }
+ * }
+ * </code></pre>
+ * 
+ * @author John Bryant
+ *
+ */
 @Slf4j
 @Configuration(ListenHere4Sqs.PROVIDER)
 @NoArgsConstructor
