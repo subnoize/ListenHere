@@ -4,10 +4,10 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.subnoize</groupId>
-	<artifactId>listenhere</artifactId>
-	<version>0.0.3-RELEASE</version>
+	<artifactId>qcat</artifactId>
+	<version>0.0.4-SNAPSHOT</version>
 	<packaging>pom</packaging>
-	<name>ListenHere</name>
+	<name>QCat</name>
 	<description>Vendor specific messaging abstraction layer that is Spring Boot friendly and easy to use.</description>
 
 	<properties>
@@ -49,7 +49,7 @@
 		<connection>scm:git:git://github.com/subnoize/ListenHere.git</connection>
 		<developerConnection>scm:git:ssh://github.com/subnoize/ListenHere.git</developerConnection>
 		<url>https://github.com/subnoize/ListenHere</url>
-		<tag>0.0.3-RELEASE</tag>
+		<tag>0.0.4-SNAPSHOT</tag>
 	</scm>
 
 	<parent>
@@ -61,7 +61,7 @@
 
 	<modules>
 		<module>core</module>
-		<module>listenhere4sqs</module>
+		<module>qcat4sqs</module>
 	</modules>
 
 	<dependencyManagement>
