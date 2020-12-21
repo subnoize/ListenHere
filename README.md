@@ -1,4 +1,4 @@
-<img src="logos/Qcat-logo.png" alt="Qcat is fat and lazy like me" style="float: left; margin-right: 10px;" />
+<img src="q/q-200.png" alt="Qcat is fat and lazy like me" style="float: left; margin-right: 10px;" />
 
 **Transparent, Vendor Agnostic Messaging for Lazy Cats and Some Humans**
 
@@ -7,7 +7,7 @@ A Spring Boot Starter that automates much of the boiler plate tasks associated w
 
 Qcat grew out of fustration with more mainstream annotation based system that either were more complex than the underlying framework or not yet supporting Java 11.
 
-## <img src="logos/Q-logo-32.png" alt="Qcat is fat and lazy like me" />cat for SQS (qcat4sqs)
+## <img src="q/Q-logo-32.png" alt="Qcat is fat and lazy like me" />cat for S<img src="q/Q-logo-32.png" alt="Qcat is fat and lazy like me" />S (qcat4sqs)
 
 The first Provider for Qcat is for AWS SQS Java 2.x API. Simply configure a Spring Bean for the service and annotate you listeners and you are off to another cat nap instead of banging your head against walls.
 
