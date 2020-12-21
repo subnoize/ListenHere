@@ -1,6 +1,6 @@
-<img src="q/q-200.png" alt="Qcat is fat and lazy like me" style="float: left; margin-right: 10px;" />
+<div style="text-align:center"><img src="q/q-200.png" alt="Qcat is fat and lazy like me" style="margin: auto;"/></div>
 
-**Transparent, Vendor Agnostic Messaging for Lazy Cats and Some Humans**
+# <img src="q/Q-logo-32.png" alt="Qcat is fat and lazy like me" />cat is a transparent, vendor agnostic messaging for Lazy Cats and Humans alike
 
 
 A Spring Boot Starter that automates much of the boiler plate tasks associated with messaging based application development. The core is vendor neutral and lends itself to integration with most brokers.
