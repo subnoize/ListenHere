@@ -1,4 +1,4 @@
-<div style="text-align:center"><img src="q/q-200.png" alt="Qcat is fat and lazy like me" style="margin: auto;"/></div>
+<div style="text-align:center;float:left; margin-right: 20px;"><img src="q/q-200.png" alt="Qcat is fat and lazy like me"/></div>
 
 # <img src="q/Q-logo-32.png" alt="Qcat is fat and lazy like me" />cat is a transparent, vendor agnostic messaging for Lazy Cats and Humans alike
 
