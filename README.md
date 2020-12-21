@@ -1,4 +1,4 @@
-<img src="q/Q-200.png" alt="Qcat is fat and lazy like me" style="float: left; margin-right: 10px;" />
+<img src="q/q-200.png" alt="Qcat is fat and lazy like me" style="float: left; margin-right: 10px;" />
 
 **Transparent, Vendor Agnostic Messaging for Lazy Cats and Some Humans**
 
