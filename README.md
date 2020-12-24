@@ -9,7 +9,7 @@ Qcat grew out of fustration with more mainstream annotation based system that ei
 
 ## <img src="q/Q-logo-32.png" alt="Qcat is fat and lazy like me" />cat for SQS (qcat4sqs)
 
-The first Provider for Qcat is for AWS SQS Java 2.x API. Simply configure a Spring Bean for the service and annotate you listeners and you are off to another cat nap instead of banging your head against walls.
+The first Provider for Qcat is for AWS SQS Java 2.x API. Simply configure a Spring Bean for the service and annotate your listeners and you are off to another cat nap instead of banging your head against bad architecture.
 
 Maven Dependency;
 ```
