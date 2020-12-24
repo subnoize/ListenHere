@@ -46,7 +46,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.Session;
 import net.subnoize.qcat.model.Attribute;
-import net.subnoize.qcat.util.ConfigurationUtils;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.model.DeleteMessageResponse;
 import software.amazon.awssdk.services.sqs.model.Message;
@@ -67,9 +66,6 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 
 	@Autowired
 	private ObjectMapper mapper;
-
-	@Autowired
-	private ConfigurationUtils helper;
 
 	private List<CompletableFuture<Integer>> threadHandles = new CopyOnWriteArrayList<>();
 
@@ -103,9 +99,10 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 	 */
 	public void shutdown() {
 		running = false;
-		log.info("Closing ListenTo: {}", helper.getString(template.getTo().value()));
 		scheduleService.shutdown();
 		executorService.shutdown();
+		log.info("Stopping: {}.{}('{}')", this.template.getTarget().getClass().getName(),
+				this.template.getMethod().getName(), this.template.getQueueUrl());
 	}
 
 	@Override

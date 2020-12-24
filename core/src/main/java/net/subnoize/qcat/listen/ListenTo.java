@@ -24,8 +24,9 @@ import java.lang.annotation.Target;
 
 /**
  * Used to annotate a listener method.
-
- * <pre><code>
+ * 
+ * <pre>
+ * <code>
  * &#64;Component
  * public class MyListeners {	
  *   &#64;ListenTo(value = "${examples.say.hello.queue}")
@@ -34,7 +35,8 @@ import java.lang.annotation.Target;
  *     return "Hello, "+msg;
  *   }
  * }
- * </code></pre>
+ * </code>
+ * </pre>
  * 
  * 
  * @author John Bryant
@@ -88,14 +90,14 @@ public @interface ListenTo {
 	 * to true. Set this to false to handle and then in the listener methods you can
 	 * manually acknowledge by changing the value in the Session object.
 	 * 
-	 * @return the boolean value of the auto-acknowledge function 
+	 * @return the boolean value of the auto-acknowledge function
 	 */
 	boolean acknowledge() default true;
 
 	/**
 	 * Providing a name for the field you want to place your custom Transaction ID
-	 * is means that ListenHere can pass this value through for you and make it
-	 * available via the Session object.
+	 * means that Qcat can pass this value through for you and make it available via
+	 * the Session object.
 	 * 
 	 * @return the name of the attribute that contains the transaction ID
 	 */
