@@ -13,11 +13,11 @@ The first Provider for Qcat is for AWS SQS Java 2.x API. Simply configure a Spri
 
 Maven Dependency;
 ```
-&lt;dependency&gt;
-&nbsp;&nbsp;&lt;groupId&gt;net.subnoize&lt;/groupId&gt;
-&nbsp;&nbsp;&lt;artifactId&gt;qcat4sqs&lt;/artifactId&gt;
-&nbsp;&nbsp;&lt;version&gt;0.0.4&lt;/version&gt;
-&lt;/dependency&gt;
+<dependency>
+    <groupId>net.subnoize</groupId>
+    <artifactId>qcat4sqs</artifactId>
+    <version>0.0.5-SNAPSHOT</version>
+</dependency>
 ```
 
 Example Configuration;
