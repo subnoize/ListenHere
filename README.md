@@ -71,4 +71,4 @@ public class TestQueues {
 
 ```
 
-*NOTE: We are working on making the line `@Listen(Qcat4Sqs.PROVIDER)` have a default if no provider is specified AND make that String able to pull from the Spring configuration stack so it can be a true LIB and CONFIG change with zero coding. The neat part is you can mix different messaging brokers in the same application.
+*NOTE: We are working on making the line `@Listen(Qcat4Sqs.PROVIDER)` have a default if no provider is specified AND make that String able to pull from the Spring configuration stack so it can be a true LIB and CONFIG change with zero coding when you change brokers. The neat part is you can mix different messaging brokers in the same application.
