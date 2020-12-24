@@ -19,7 +19,6 @@ package net.subnoize.qcat;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -34,9 +33,7 @@ import lombok.Data;
  * @author John Bryant
  *
  */
-@Data
-@Builder
-public class Session {
+@Datapublic class Session <M> {
 
 	private boolean acknowledge;
 
@@ -46,11 +43,13 @@ public class Session {
 
 	private String errorDescription;
 
+	private M response;
+	
 	/**
 	 * The raw inbound message is present here. If the message is delivered by JMS
 	 * the this might be a TextMessage or the like
 	 */
-	private Object rawInboundMessage;
+	private M request;
 
 	/**
 	 * The override when the SendTo is present. This means that if the process
@@ -58,7 +57,6 @@ public class Session {
 	 */
 	private String destination;
 
-	@Builder.Default
 	private Map<String, Object> attributes = new HashMap<>();
 
 }
