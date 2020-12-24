@@ -40,6 +40,7 @@ import net.subnoize.qcat.model.Payload;
 import net.subnoize.qcat.send.SendTo;
 import net.subnoize.qcat.util.ConfigurationUtils;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
+import software.amazon.awssdk.services.sqs.model.Message;
 
 @Slf4j
 @NoArgsConstructor
@@ -143,9 +144,20 @@ public class SqsExecutionTemplate {
 		}
 	}
 
-	public Session newSession() {
-		return Session.builder().acknowledge(to.acknowledge()).error(false).errorCode(-1).errorDescription(null)
-				.destination(sendTo).build();
+	/**
+	 * Builds and returns the Qcat Session object
+	 * @param m
+	 * @return
+	 */
+	public Session<Message> newSession(Message m) {
+		Session<Message> session = new Session<>();
+		session.setAcknowledge(to.acknowledge());
+		session.setError(false);
+		session.setErrorCode(-1);
+		session.setErrorDescription(null);
+		session.setDestination(sendTo);
+		session.setRequest(m);
+		return session;
 	}
 
 	public Object invoke(Object[] args) throws IllegalAccessException, InvocationTargetException {
