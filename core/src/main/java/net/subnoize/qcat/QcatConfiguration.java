@@ -32,9 +32,9 @@ import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.listen.Listen;
 
 /**
- * The configuration class for ListenHere is the processor for the annotations
- * which brings the elements together into a runnable state. The user will see
- * this as Spring magic.
+ * The configuration class for Qcat is the processor for the annotations which
+ * brings the elements together into a runnable state. The user will see this as
+ * Spring magic.
  * 
  * @author John Bryant
  *
@@ -42,7 +42,7 @@ import net.subnoize.qcat.listen.Listen;
 @Slf4j
 @Configuration
 @ComponentScan(basePackages = { "net.subnoize.qcat" })
-public class QCatConfiguration {
+public class QcatConfiguration {
 
 	@Autowired
 	private ApplicationContext context;
