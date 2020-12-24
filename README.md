@@ -11,6 +11,15 @@ Qcat grew out of fustration with more mainstream annotation based system that ei
 
 The first Provider for Qcat is for AWS SQS Java 2.x API. Simply configure a Spring Bean for the service and annotate you listeners and you are off to another cat nap instead of banging your head against walls.
 
+Maven Dependency;
+```
+&lt;dependency&gt;
+&nbsp;&nbsp;&lt;groupId&gt;net.subnoize&lt;/groupId&gt;
+&nbsp;&nbsp;&lt;artifactId&gt;qcat4sqs&lt;/artifactId&gt;
+&nbsp;&nbsp;&lt;version&gt;0.0.4&lt;/version&gt;
+&lt;/dependency&gt;
+```
+
 Example Configuration;
 ```
 package net.subnoize.examples;
