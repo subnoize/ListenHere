@@ -57,11 +57,11 @@ import software.amazon.awssdk.services.sqs.SqsAsyncClient;
  *
  */
 @Slf4j
-@Configuration(QCat4Sqs.PROVIDER)
+@Configuration(Qcat4Sqs.PROVIDER)
 @NoArgsConstructor
-public class QCat4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
+public class Qcat4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
 
-	public static final String PROVIDER = "QCat4Sqs";
+	public static final String PROVIDER = "Qcat4Sqs";
 
 	@Autowired
 	private SqsAsyncClient asyncClient;
