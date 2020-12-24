@@ -16,7 +16,7 @@ Maven Dependency;
 <dependency>
 	<groupId>net.subnoize</groupId>
 	<artifactId>qcat4sqs</artifactId>
-	<version>0.0.7</version>
+	<version>0.0.8-SNAPSHOT</version>
 </dependency>
 ```
 

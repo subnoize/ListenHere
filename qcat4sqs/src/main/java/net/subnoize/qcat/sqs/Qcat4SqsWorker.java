@@ -199,7 +199,7 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 	private void processMessages(List<Message> messages) {
 		messages.forEach(m -> {
 			try {
-				Session<Message> session = template.newSession(m);
+				Session session = template.newSession(m);
 				handleMessage(session);
 				if (session.isAcknowledge()) {
 					DeleteMessageResponse result = asyncClient
@@ -228,7 +228,7 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	private void handleMessage(Session<Message> session) throws JsonProcessingException, IllegalAccessException,
+	private void handleMessage(Session session) throws JsonProcessingException, IllegalAccessException,
 			InvocationTargetException, InterruptedException, ExecutionException {
 		Object[] params = parseParams(session);
 		if (params.length == template.getParameters().length) {
@@ -243,21 +243,29 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 				if (ret instanceof SendMessageRequest) {
 					asyncClient.sendMessage((SendMessageRequest) ret).get();
 				} else {
-					String body = null;
-					if (template.isSendToAsString()) {
-						body = ret.toString();
+					if (session.getResponse() != null) {
+						// huh? ok, maybe developer set it?
 					} else {
-						body = mapper.writeValueAsString(ret);
+						String body = null;
+						if (template.isSendToAsString()) {
+							body = ret.toString();
+						} else {
+							body = mapper.writeValueAsString(ret);
+						}
+						SendMessageRequest msg = SendMessageRequest.builder().queueUrl(session.getDestination())
+								.messageBody(body).messageAttributes(getAttributes(session)).build();
+						session.setResponse(msg);
 					}
-					asyncClient.sendMessage(SendMessageRequest.builder().queueUrl(session.getDestination())
-							.messageBody(body).messageAttributes(getAttributes(session)).build()).get();
+					
+					// here is where we work the responses into batches
+					asyncClient.sendMessage((SendMessageRequest) session.getResponse()).get();
 				}
 			}
 		}
 
 	}
 
-	private Map<String, MessageAttributeValue> getAttributes(Session<Message> session) {
+	private Map<String, MessageAttributeValue> getAttributes(Session session) {
 		if (session.getAttributes().isEmpty()) {
 			return null;
 		}
@@ -266,7 +274,7 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 		return builder.build();
 	}
 
-	private Object[] parseParams(Session<Message> session) throws JsonProcessingException {
+	private Object[] parseParams(Session session) throws JsonProcessingException {
 		Object[] params = new Object[template.getParameters().length];
 		for (int i = 0; i < params.length; i++) {
 			Parameter p = template.getParameters()[i];
@@ -276,17 +284,18 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 				if (p.getType() == Message.class) {
 					params[i] = p.getType().cast(Message.class);
 				} else if (p.getType() == String.class) {
-					params[i] = session.getRequest().body();
+					params[i] = ((Message) session.getRequest()).body();
 				} else {
 					try {
-						params[i] = mapper.readValue(session.getRequest().body(), template.getPayload().getType());
+						params[i] = mapper.readValue(((Message) session.getRequest()).body(),
+								template.getPayload().getType());
 					} catch (JsonProcessingException e) {
-						if (session != null) {
+						if (session.isError()) {
 							params[i] = null;
 							session.setError(true);
 							session.setErrorCode(500);
 							session.setErrorDescription(e.getMessage());
-							log.error("Error parsing object: {} Exception: {}", session.getRequest().body(),
+							log.error("Error parsing object: {} Exception: {}", ((Message) session.getRequest()).body(),
 									e.getMessage());
 						} else {
 							throw e;
@@ -295,7 +304,7 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 				}
 			} else if (p.isAnnotationPresent(Attribute.class)) {
 				Attribute attr = p.getAnnotation(Attribute.class);
-				MessageAttributeValue v = session.getRequest().messageAttributes().get(attr.value());
+				MessageAttributeValue v = ((Message) session.getRequest()).messageAttributes().get(attr.value());
 				if (v != null) {
 					params[i] = v.stringValue();
 				} else {
@@ -306,7 +315,8 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 			}
 		}
 		if (StringUtils.isNotBlank(template.getTo().transactionId())) {
-			MessageAttributeValue v = session.getRequest().messageAttributes().get(template.getTo().transactionId());
+			MessageAttributeValue v = ((Message) session.getRequest()).messageAttributes()
+					.get(template.getTo().transactionId());
 			if (v != null) {
 				MDC.put(template.getTo().transactionId(), v.stringValue());
 				switch (v.dataType()) {

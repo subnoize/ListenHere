@@ -149,15 +149,8 @@ public class SqsExecutionTemplate {
 	 * @param m
 	 * @return
 	 */
-	public Session<Message> newSession(Message m) {
-		Session<Message> session = new Session<>();
-		session.setAcknowledge(to.acknowledge());
-		session.setError(false);
-		session.setErrorCode(-1);
-		session.setErrorDescription(null);
-		session.setDestination(sendTo);
-		session.setRequest(m);
-		return session;
+	public Session newSession(Message m) {
+		return Session.builder().acknowledge(to.acknowledge()).error(false).errorCode(-1).errorDescription(null).destination(sendTo).request(m).build();
 	}
 
 	public Object invoke(Object[] args) throws IllegalAccessException, InvocationTargetException {
