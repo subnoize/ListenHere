@@ -17,8 +17,8 @@
 package net.subnoize.qcat.sqs;
 
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
@@ -33,25 +33,47 @@ import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.Provider;
 import net.subnoize.qcat.listen.ListenTo;
-import net.subnoize.qcat.util.ConfigurationUtils;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
+/**
+ * Usage:
+ * 
+ * Create a SqsAsyncClient bean and annotate your listeners appropriately to
+ * begin.
+ * 
+ * <pre>
+ * <code>
+ * &#64;Configuration
+ * public class SqsConfiguration {	
+ *   &#64;Bean
+ *   public SqsAsyncClient getSqsAsyncClient() {
+ *     return SqsAsyncClient.create();
+ *   }
+ * }
+ * </code>
+ * </pre>
+ * 
+ * @author John Bryant
+ *
+ */
 @Slf4j
-@Configuration(ListenHere4Sqs.PROVIDER)
+@Configuration(Qcat4Sqs.PROVIDER)
 @NoArgsConstructor
-public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
+public class Qcat4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
 
-	public static final String PROVIDER = "ListenHere4Sqs";
+	public static final String PROVIDER = "Qcat4Sqs";
+
+	@Autowired
+	private SqsAsyncClient asyncClient;
 
 	@Autowired
 	private ApplicationContext context;
 
-	@Autowired
-	private ConfigurationUtils helper;
-
-	private Map<String, ListenHere4SqsWorker> workers = new HashMap<>();
+	private List<Qcat4SqsWorker> workers = new ArrayList<>();
 
 	public void shutdown() {
-		workers.entrySet().forEach(e -> e.getValue().shutdown());
+		workers.forEach(Qcat4SqsWorker::shutdown);
+		asyncClient.close();
 	}
 
 	@Override
@@ -59,14 +81,7 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 		for (Method method : klass.getDeclaredMethods()) {
 			if (method.isAnnotationPresent(ListenTo.class)) {
 				try {
-					ListenTo lt = method.getAnnotation(ListenTo.class);
-					String queueString = lt.value();
-					if (queueString.contains("${")) {
-						queueString = helper.getString(queueString);
-					}
-					workers.put(queueString, getMesssageWorker(getExecutionTemplate(lt, queueString, method, context.getBean(klass))));
-					log.info("ListenTo: {}.{}('{}',{},{},{},{})", klass.getName(), method.getName(), queueString,
-							lt.min(), lt.max(), lt.timeout(), lt.polling());
+					workers.add(getMesssageWorker(method, context.getBean(klass)));
 				} catch (Exception e) {
 					log.error("Error creating method and target for listener worker", e);
 				}
@@ -79,21 +94,18 @@ public class ListenHere4Sqs implements Provider, ApplicationListener<ContextClos
 		shutdown();
 	}
 
-	@Bean(name = "ListenHere4SqsWorker")
+	@Bean
 	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
-	public ListenHere4SqsWorker getMesssageWorker(SqsExecutionTemplate template) {
-		return new ListenHere4SqsWorker(template);
+	public Qcat4SqsWorker getMesssageWorker(Method method, Object target) {
+		return new Qcat4SqsWorker(getExecutionTemplate(method, target));
 	}
 
-	@Bean(name = "SqsExecutionTemplate")
+	@Bean
 	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
-	public SqsExecutionTemplate getExecutionTemplate(ListenTo to, String queueUrl, Method method, Object target)
-			throws NoSuchMethodException {
+	public SqsExecutionTemplate getExecutionTemplate(Method method, Object target) {
 		SqsExecutionTemplate temp = new SqsExecutionTemplate();
-		temp.setQueueUrl(queueUrl);
 		temp.setMethod(method);
 		temp.setTarget(target);
-		temp.setTo(to);
 		return temp;
 	}
 }

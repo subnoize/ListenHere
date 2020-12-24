@@ -22,6 +22,7 @@ import java.lang.reflect.Parameter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 import javax.annotation.PostConstruct;
 
@@ -31,13 +32,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.Session;
 import net.subnoize.qcat.listen.ListenTo;
 import net.subnoize.qcat.model.Attribute;
 import net.subnoize.qcat.model.Payload;
 import net.subnoize.qcat.send.SendTo;
 import net.subnoize.qcat.util.ConfigurationUtils;
+import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 
+@Slf4j
 @NoArgsConstructor
 @Getter
 @Setter
@@ -45,6 +49,9 @@ public class SqsExecutionTemplate {
 
 	@Autowired
 	private ConfigurationUtils helper;
+
+	@Autowired
+	private SqsAsyncClient asyncClient;
 
 	private String queueUrl;
 	private Method method;
@@ -60,28 +67,52 @@ public class SqsExecutionTemplate {
 	private boolean sendToAsString;
 
 	/**
+	 * @throws ExecutionException
+	 * @throws InterruptedException
 	 * 
 	 */
 	@PostConstruct
-	private void init() {
+	private void init() throws InterruptedException, ExecutionException {
+
+		to = method.getAnnotation(ListenTo.class);
+		queueUrl = to.value();
+
+		if (queueUrl.contains("${")) {
+			queueUrl = helper.getString(queueUrl);
+		}
+
+		String temp = resolveQueueUrl(queueUrl);
+		if (StringUtils.isNotBlank(temp)) {
+			queueUrl = temp;
+		}
+
+		log.info("Starting: {}.{}('{}',{},{},{},{})", target.getClass().getName(), method.getName(), queueUrl,
+				to.min(), to.max(), to.timeout(), to.polling());
+
 		if (method.isAnnotationPresent(SendTo.class)) {
 			sendToPresent = true;
 			sendTo = method.getAnnotation(SendTo.class).value();
-			if (sendTo.contains("${")) {
-				sendTo = helper.getString(sendTo);
-				Class<?> ret = method.getReturnType();
-				if (String.class.equals(ret) || Integer.class.equals(ret) || Long.class.equals(ret)
-						|| Float.class.equals(ret) || Double.class.equals(ret)) {
-					sendToAsString = true;
-				} else {
-					sendToAsString = false;
+
+			if (StringUtils.isNotBlank(sendTo)) {
+				if (sendTo.contains("${")) {
+					sendTo = helper.getString(sendTo);
+				}
+
+				String sendToStr = resolveQueueUrl(sendTo);
+				if (StringUtils.isNotBlank(sendToStr)) {
+					sendTo = sendToStr;
 				}
 			}
-		}
-	}
+			Class<?> ret = method.getReturnType();
+			if (String.class.equals(ret) || Integer.class.equals(ret) || Long.class.equals(ret)
+					|| Float.class.equals(ret) || Double.class.equals(ret)) {
+				sendToAsString = true;
+			} else {
+				sendToAsString = false;
+			}
 
-	@PostConstruct
-	private void parameterInit() {
+		}
+
 		parameters = method.getParameters();
 		if (parameters.length == 1) {
 			payload = parameters[0];
@@ -98,12 +129,17 @@ public class SqsExecutionTemplate {
 				}
 			}
 		}
-	}
 
-	@PostConstruct
-	private void transactionId() {
 		if (StringUtils.isNotBlank(to.transactionId()) && !attributeNames.contains(to.transactionId())) {
 			attributeNames.add(to.transactionId());
+		}
+	}
+
+	private String resolveQueueUrl(String queueName) throws InterruptedException, ExecutionException {
+		if (queueName.toLowerCase().contains("https://")) {
+			return queueName;
+		} else {
+			return asyncClient.getQueueUrl(b -> b.queueName(queueName)).get().queueUrl();
 		}
 	}
 

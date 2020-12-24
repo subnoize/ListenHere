@@ -5,7 +5,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>net.subnoize</groupId>
 	<artifactId>qcat</artifactId>
-	<version>0.0.4-SNAPSHOT</version>
+	<version>0.0.4</version>
 	<packaging>pom</packaging>
 	<name>QCat</name>
 	<description>Vendor specific messaging abstraction layer that is Spring Boot friendly and easy to use.</description>
@@ -49,13 +49,13 @@
 		<connection>scm:git:git://github.com/subnoize/ListenHere.git</connection>
 		<developerConnection>scm:git:ssh://github.com/subnoize/ListenHere.git</developerConnection>
 		<url>https://github.com/subnoize/ListenHere</url>
-		<tag>0.0.4-SNAPSHOT</tag>
+		<tag>0.0.4</tag>
 	</scm>
 
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.3.5.RELEASE</version>
+		<version>2.4.1</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
