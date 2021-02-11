@@ -37,13 +37,14 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.math3.stat.descriptive.DescriptiveStatistics;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.Session;
 import net.subnoize.qcat.model.Attribute;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
@@ -58,8 +59,11 @@ import software.amazon.awssdk.services.sqs.model.SendMessageRequest;
  * @author youca
  *
  */
-@Slf4j
 class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
+	
+	private static Logger log = LoggerFactory.getLogger(Qcat4SqsWorker.class);
+	
+	private static final long SHUTDOWN_TIMEOUT = 1000;
 
 	@Autowired
 	private SqsAsyncClient asyncClient;
@@ -95,12 +99,13 @@ class Qcat4SqsWorker implements Runnable, RejectedExecutionHandler {
 	}
 
 	/**
+	 * @throws InterruptedException 
 	 * 
 	 */
-	public void shutdown() {
+	public void shutdown() throws InterruptedException {
 		running = false;
-		scheduleService.shutdown();
-		executorService.shutdown();
+		executorService.awaitTermination(SHUTDOWN_TIMEOUT, TimeUnit.MILLISECONDS);
+		scheduleService.awaitTermination(SHUTDOWN_TIMEOUT, TimeUnit.MILLISECONDS);
 		log.info("Stopping: {}.{}('{}')", this.template.getTarget().getClass().getName(),
 				this.template.getMethod().getName(), this.template.getQueueUrl());
 	}

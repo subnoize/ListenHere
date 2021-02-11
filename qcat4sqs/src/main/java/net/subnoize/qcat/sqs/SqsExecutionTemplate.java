@@ -27,12 +27,10 @@ import java.util.concurrent.ExecutionException;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.Session;
 import net.subnoize.qcat.listen.ListenTo;
 import net.subnoize.qcat.model.Attribute;
@@ -42,11 +40,9 @@ import net.subnoize.qcat.util.ConfigurationUtils;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
 import software.amazon.awssdk.services.sqs.model.Message;
 
-@Slf4j
-@NoArgsConstructor
-@Getter
-@Setter
 public class SqsExecutionTemplate {
+	
+	private static Logger log = LoggerFactory.getLogger(Qcat4Sqs.class);
 
 	@Autowired
 	private ConfigurationUtils helper;
@@ -150,11 +146,130 @@ public class SqsExecutionTemplate {
 	 * @return
 	 */
 	public Session newSession(Message m) {
-		return Session.builder().acknowledge(to.acknowledge()).error(false).errorCode(-1).errorDescription(null).destination(sendTo).request(m).build();
+		Session s = new Session();
+		s.setAcknowledge(to.acknowledge());
+		s.setError(false);
+		s.setErrorCode(-1);
+		s.setErrorDescription(null);
+		s.setDestination(sendTo);
+		s.setRequest(m);
+		return s;
 	}
 
 	public Object invoke(Object[] args) throws IllegalAccessException, InvocationTargetException {
 		return method.invoke(target, args);
+	}
+
+	public ConfigurationUtils getHelper() {
+		return helper;
+	}
+
+	public void setHelper(ConfigurationUtils helper) {
+		this.helper = helper;
+	}
+
+	public SqsAsyncClient getAsyncClient() {
+		return asyncClient;
+	}
+
+	public void setAsyncClient(SqsAsyncClient asyncClient) {
+		this.asyncClient = asyncClient;
+	}
+
+	public String getQueueUrl() {
+		return queueUrl;
+	}
+
+	public void setQueueUrl(String queueUrl) {
+		this.queueUrl = queueUrl;
+	}
+
+	public Method getMethod() {
+		return method;
+	}
+
+	public void setMethod(Method method) {
+		this.method = method;
+	}
+
+	public Object getTarget() {
+		return target;
+	}
+
+	public void setTarget(Object target) {
+		this.target = target;
+	}
+
+	public Parameter[] getParameters() {
+		return parameters;
+	}
+
+	public void setParameters(Parameter[] parameters) {
+		this.parameters = parameters;
+	}
+
+	public Parameter getPayload() {
+		return payload;
+	}
+
+	public void setPayload(Parameter payload) {
+		this.payload = payload;
+	}
+
+	public List<Parameter> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(List<Parameter> attributes) {
+		this.attributes = attributes;
+	}
+
+	public Collection<String> getAttributeNames() {
+		return attributeNames;
+	}
+
+	public void setAttributeNames(Collection<String> attributeNames) {
+		this.attributeNames = attributeNames;
+	}
+
+	public ListenTo getTo() {
+		return to;
+	}
+
+	public void setTo(ListenTo to) {
+		this.to = to;
+	}
+
+	public int getThreadCeiling() {
+		return threadCeiling;
+	}
+
+	public void setThreadCeiling(int threadCeiling) {
+		this.threadCeiling = threadCeiling;
+	}
+
+	public boolean isSendToPresent() {
+		return sendToPresent;
+	}
+
+	public void setSendToPresent(boolean sendToPresent) {
+		this.sendToPresent = sendToPresent;
+	}
+
+	public String getSendTo() {
+		return sendTo;
+	}
+
+	public void setSendTo(String sendTo) {
+		this.sendTo = sendTo;
+	}
+
+	public boolean isSendToAsString() {
+		return sendToAsString;
+	}
+
+	public void setSendToAsString(boolean sendToAsString) {
+		this.sendToAsString = sendToAsString;
 	}
 
 }

@@ -19,9 +19,6 @@ package net.subnoize.qcat;
 import java.util.HashMap;
 import java.util.Map;
 
-import lombok.Builder;
-import lombok.Data;
-
 /**
  * Session objects are to maintain the thread safety during operation while
  * processing events to which you are listening. They are built for you by the
@@ -33,9 +30,7 @@ import lombok.Data;
  * 
  * @author John Bryant
  *
- */
-@Data
-@Builderpublic class Session {
+ */public class Session {
 
 	private boolean acknowledge;
 
@@ -59,7 +54,75 @@ import lombok.Data;
 	 */
 	private String destination;
 
-	@Builder.Default
 	private Map<String, Object> attributes = new HashMap<>();
+
+	public Session() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public boolean isAcknowledge() {
+		return acknowledge;
+	}
+
+	public void setAcknowledge(boolean acknowledge) {
+		this.acknowledge = acknowledge;
+	}
+
+	public boolean isError() {
+		return error;
+	}
+
+	public void setError(boolean error) {
+		this.error = error;
+	}
+
+	public int getErrorCode() {
+		return errorCode;
+	}
+
+	public void setErrorCode(int errorCode) {
+		this.errorCode = errorCode;
+	}
+
+	public String getErrorDescription() {
+		return errorDescription;
+	}
+
+	public void setErrorDescription(String errorDescription) {
+		this.errorDescription = errorDescription;
+	}
+
+	public Object getResponse() {
+		return response;
+	}
+
+	public void setResponse(Object response) {
+		this.response = response;
+	}
+
+	public Object getRequest() {
+		return request;
+	}
+
+	public void setRequest(Object request) {
+		this.request = request;
+	}
+
+	public String getDestination() {
+		return destination;
+	}
+
+	public void setDestination(String destination) {
+		this.destination = destination;
+	}
+
+	public Map<String, Object> getAttributes() {
+		return attributes;
+	}
+
+	public void setAttributes(Map<String, Object> attributes) {
+		this.attributes = attributes;
+	}
 
 }

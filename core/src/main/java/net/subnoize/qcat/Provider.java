@@ -22,7 +22,7 @@ package net.subnoize.qcat;
  * this interface.
  * <p>
  * To use your custom provider you would the specify it by Spring Bean name as
- * the Listen value.
+ * the Qcat value.
  * 
  * @author John Bryant
  * @version 1.0

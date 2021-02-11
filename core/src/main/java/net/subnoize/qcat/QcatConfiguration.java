@@ -23,13 +23,12 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-
-import lombok.extern.slf4j.Slf4j;
-import net.subnoize.qcat.listen.Listen;
 
 /**
  * The configuration class for Qcat is the processor for the annotations which
@@ -39,10 +38,11 @@ import net.subnoize.qcat.listen.Listen;
  * @author John Bryant
  *
  */
-@Slf4j
 @Configuration
 @ComponentScan(basePackages = { "net.subnoize.qcat" })
 public class QcatConfiguration {
+	
+	private static Logger log = LoggerFactory.getLogger(QcatConfiguration.class);
 
 	@Autowired
 	private ApplicationContext context;
@@ -55,7 +55,7 @@ public class QcatConfiguration {
 	 */
 	@PostConstruct
 	public void init() throws ClassNotFoundException {
-		Map<String, Object> beans = context.getBeansWithAnnotation(Listen.class);
+		Map<String, Object> beans = context.getBeansWithAnnotation(Qcat.class);
 		for (Object target : beans.values()) {
 			Class<?> klass = target.getClass();
 			List<Class<?>> interfaces = Arrays.asList(klass.getInterfaces());
@@ -64,11 +64,11 @@ public class QcatConfiguration {
 					|| interfaces.contains(org.springframework.aop.framework.Advised.class)) {
 				klass = klass.getSuperclass();
 			}
-			Listen listen = klass.getAnnotation(Listen.class);
-			if (StringUtils.isNotBlank(listen.value())) {
-				context.getBean(listen.value(), Provider.class).registerListener(klass);
+			Qcat qcat = klass.getAnnotation(Qcat.class);
+			if (StringUtils.isNotBlank(qcat.value())) {
+				context.getBean(qcat.value(), Provider.class).registerListener(klass);
 			} else {
-				log.error("@Listen used with blank service reference: {}", klass.getName());
+				log.error("@Qcat used with blank service reference: {}", klass.getName());
 			}
 		}
 	}

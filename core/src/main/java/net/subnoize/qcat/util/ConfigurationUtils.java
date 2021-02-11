@@ -22,15 +22,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
-import lombok.NoArgsConstructor;
-
 /**
  * A helper to unwrap and retrieve values from the Spring Configuration system.
  * 
  * @author John Bryant
  *
  */
-@NoArgsConstructor
 @Component
 public class ConfigurationUtils {
 

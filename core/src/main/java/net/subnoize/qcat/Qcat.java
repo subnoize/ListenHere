@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package net.subnoize.qcat.listen;
+package net.subnoize.qcat;
 
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
@@ -31,6 +31,6 @@ import java.lang.annotation.Target;
  */
 @Retention(RUNTIME)
 @Target(TYPE)
-public @interface Listen {
+public @interface Qcat {
 	String value() default "";
 }

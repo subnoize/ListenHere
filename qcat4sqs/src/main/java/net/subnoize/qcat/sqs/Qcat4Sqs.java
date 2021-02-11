@@ -20,6 +20,8 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.ApplicationContext;
@@ -29,8 +31,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.event.ContextClosedEvent;
 
-import lombok.NoArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import net.subnoize.qcat.Provider;
 import net.subnoize.qcat.listen.ListenTo;
 import software.amazon.awssdk.services.sqs.SqsAsyncClient;
@@ -56,10 +56,10 @@ import software.amazon.awssdk.services.sqs.SqsAsyncClient;
  * @author John Bryant
  *
  */
-@Slf4j
 @Configuration(Qcat4Sqs.PROVIDER)
-@NoArgsConstructor
 public class Qcat4Sqs implements Provider, ApplicationListener<ContextClosedEvent> {
+
+	private static Logger log = LoggerFactory.getLogger(Qcat4Sqs.class);
 
 	public static final String PROVIDER = "Qcat4Sqs";
 
@@ -72,7 +72,13 @@ public class Qcat4Sqs implements Provider, ApplicationListener<ContextClosedEven
 	private List<Qcat4SqsWorker> workers = new ArrayList<>();
 
 	public void shutdown() {
-		workers.forEach(Qcat4SqsWorker::shutdown);
+		workers.forEach(t -> {
+			try {
+				t.shutdown();
+			} catch (InterruptedException e) {
+				log.error("Exception in shutdown", e);
+			}
+		});
 		asyncClient.close();
 	}
 
